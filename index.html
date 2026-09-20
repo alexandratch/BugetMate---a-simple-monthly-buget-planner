@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BudgetMate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bg-orb orb-one"></div>
+    <div class="bg-orb orb-two"></div>
+
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-mark">B</div>
+                <div>
+                    <h1>BugetMate</h1>
+                    <span>personal budget</span>
+                </div>
+            </div>
+
+            <nav>
+                <button class="nav-item active" data-section="dashboard">
+                    <span class="nav-icon">01</span> Dashboard
+                </button>
+                <button class="nav-item" data-section="expenses">
+                    <span class="nav-icon">02</span> Expenses
+                </button>
+                <button class="nav-item" data-section="income">
+                    <span class="nav-icon">03</span> Income
+                </button>
+                <button class="nav-item" data-section="budget">
+                    <span class="nav-icon">04</span> Budgets
+                </button>
+                <button class="nav-item" data-section="analytics">
+                    <span class="nav-icon">05</span> Analytics
+                </button>
+                <button class="nav-item" data-section="settings">
+                    <span class="nav-icon">06</span> Settings
+                </button>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="mini-goal">
+                    <div class="mini-goal-head">
+                        <span>Savings goal</span>
+                        <span id="miniSavingsPercent">0%</span>
+                    </div>
+                    <div class="progress-track"><div id="miniSavingsBar" class="progress-fill"></div></div>
+                    <p id="miniSavingsText">0 RON saved</p>
+                </div>
+                <button id="resetDataBtn" class="ghost-danger">Reset all data</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="mobile-header">
+                <div class="brand">
+                    <div class="brand-mark">B</div>
+                    <div><h1>BugetMate</h1>
+                        <span>personal budget</span>
+                    </div>
+                </div>
+                <button id="mobileMenuBtn" class="icon-button">☰</button>
+            </header>
+
+            <section id="dashboard" class="page active">
+                <div class="page-heading">
+                    <div>
+                        <p class="eyebrow" id="currentMonthLabel">September 2026</p>
+                        <h2>Welcome back<span class="accent-dot">.</span></h2>
+                        <p class="muted">A clearer view of your money, one month at a time.</p>
+                    </div>
+                    <div class="heading-actions">
+                        <button class="secondary-btn" id="quickExpenseBtn">Add expense</button>
+                        <button class="primary-btn" id="quickIncomeBtn">Add income</button>
+                    </div>
+                </div>
+
+                <div class="stat-grid">
+                    <article class="stat-card pink">
+                        <div class="stat-label">Total income</div>
+                        <div class="stat-value" id="dashIncome">0 RON</div>
+                        <div class="stat-foot">Money coming in this month</div>
+                    </article>
+                    <article class="stat-card">
+                        <div class="stat-label">Total spent</div>
+                        <div class="stat-value" id="dashExpenses">0 RON</div>
+                        <div class="stat-foot">Across all categories</div>
+                    </article>
+                    <article class="stat-card">
+                        <div class="stat-label">Available balance</div>
+                        <div class="stat-value" id="dashBalance">0 RON</div>
+                        <div class="stat-foot" id="balanceFoot">Income minus expenses</div>
+                    </article>
+                    <article class="stat-card lavender">
+                        <div class="stat-label">Daily spending room</div>
+                        <div class="stat-value" id="dailySpend">0 RON</div>
+                        <div class="stat-foot" id="daysLeftText">Based on the rest of the month</div>
+                    </article>
+                </div>
+
+                <div class="dashboard-grid">
+                    <article class="panel spending-panel">
+                        <div class="panel-title-row">
+                            <div>
+                                <p class="eyebrow">Where it goes</p>
+                                <h3>Spending by category</h3>
+                            </div>
+                            <button class="text-btn" data-section-link="analytics">View analytics</button>
+                        </div>
+                        <div id="dashboardCategories" class="category-list"></div>
+                    </article>
+
+                    <article class="panel">
+                        <div class="panel-title-row">
+                            <div>
+                                <p class="eyebrow">Activity</p>
+                                <h3>Recent transactions</h3>
+                            </div>
+                            <button class="text-btn" data-section-link="expenses">See all</button>
+                        </div>
+                        <div id="recentTransactions" class="transaction-list"></div>
+                    </article>
+                </div>
+
+                <div class="bottom-grid">
+                    <article class="panel">
+                        <div class="panel-title-row">
+                            <div>
+                                <p class="eyebrow">Plan</p>
+                                <h3>Budget progress</h3>
+                            </div>
+                            <button class="text-btn" data-section-link="budget">Manage</button>
+                        </div>
+                        <div id="dashboardBudget" class="budget-summary"></div>
+                    </article>
+
+                    <article class="panel savings-panel">
+                        <div class="panel-title-row">
+                            <div>
+                                <p class="eyebrow">Your goal</p>
+                                <h3>Savings tracker</h3>
+                            </div>
+                        </div>
+                        <div class="savings-circle-wrap">
+                            <div class="savings-circle">
+                                <div>
+                                    <strong id="savingsPercent">0%</strong>
+                                    <span>saved</span>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="big-number" id="savingsAmount">0 RON</p>
+                                <p class="muted">towards your monthly goal of <span id="savingsGoalDisplay">0 RON</span></p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section id="expenses" class="page">
+                <div class="page-heading">
+                    <div>
+                        <p class="eyebrow">Money out</p>
+                        <h2>Expenses<span class="accent-dot">.</span></h2>
+                        <p class="muted">Track every purchase without making it complicated.</p>
+                    </div>
+                    <button class="primary-btn" id="expensesAddBtn">Add expense</button>
+                </div>
+                <div class="toolbar panel">
+                    <input id="expenseSearch" class="search-input" type="search" placeholder="Search expenses...">
+                    <select id="expenseCategoryFilter" class="select-input">
+                        <option value="all">All categories</option>
+                    </select>
+                    <select id="expenseMonthFilter" class="select-input">
+                        <option value="current">Current month</option>
+                        <option value="all">All months</option>
+                    </select>
+                </div>
+                <article class="panel table-panel">
+                    <div class="table-head">
+                        <span>Description</span>
+                        <span>Category</span>
+                        <span>Date</span>
+                        <span>Amount</span>
+                        <span></span>
+                    </div>
+                    <div id="expensesTable"></div>
+                </article>
+            </section>
+
+            <section id="income" class="page">
+                <div class="page-heading">
+                    <div>
+                        <p class="eyebrow">Money in</p>
+                        <h2>Income<span class="accent-dot">.</span></h2>
+                        <p class="muted">Keep your income sources organized.</p>
+                    </div>
+                    <button class="primary-btn" id="incomeAddBtn">Add income</button>
+                </div>
+                <article class="panel table-panel">
+                    <div class="table-head income-head">
+                        <span>Source</span>
+                        <span>Date</span>
+                        <span>Amount</span>
+                        <span></span>
+                    </div>
+                    <div id="incomeTable"></div>
+                </article>
+            </section>
+
+            <section id="budget" class="page">
+                <div class="page-heading">
+                    <div>
+                        <p class="eyebrow">Your limits</p>
+                        <h2>Monthly budgets<span class="accent-dot">.</span></h2>
+                        <p class="muted">Decide what you want to spend before the month decides for you.</p>
+                    </div>
+                </div>
+                <div id="budgetCards" class="budget-card-grid"></div>
+            </section>
+
+            <section id="analytics" class="page">
+                <div class="page-heading">
+                    <div>
+                        <p class="eyebrow">The bigger picture</p>
+                        <h2>Analytics<span class="accent-dot">.</span></h2>
+                        <p class="muted">Understand your spending patterns.</p>
+                    </div>
+                    <div class="month-switcher">
+                        <button id="prevMonth" class="icon-button">‹</button>
+                        <span id="analyticsMonth">September 2026</span>
+                        <button id="nextMonth" class="icon-button">›</button>
+                    </div>
+                </div>
+                <div class="analytics-grid">
+                    <article class="panel chart-panel">
+                        <div class="panel-title-row"><div><p class="eyebrow">Distribution</p><h3>Category spending</h3></div></div>
+                        <div class="donut-wrap">
+                            <div id="donutChart" class="donut"><div class="donut-center"><strong id="donutTotal">0</strong><span>RON spent</span></div></div>
+                            <div id="donutLegend" class="legend"></div>
+                        </div>
+                    </article>
+                    <article class="panel chart-panel">
+                        <div class="panel-title-row"><div><p class="eyebrow">Comparison</p><h3>Income vs expenses</h3></div></div>
+                        <div id="barChart" class="bar-chart"></div>
+                    </article>
+                </div>
+                <article class="panel insight-panel">
+                    <p class="eyebrow">Monthly insight</p>
+                    <h3 id="insightTitle">Your month at a glance</h3>
+                    <p id="insightText" class="muted">Add a few transactions and your spending insight will appear here.</p>
+                </article>
+            </section>
+
+            <section id="settings" class="page">
+                <div class="page-heading">
+                    <div>
+                        <p class="eyebrow">Personalize</p>
+                        <h2>Settings<span class="accent-dot">.</span></h2>
+                        <p class="muted">Make the dashboard fit the way you manage money.</p>
+                    </div>
+                </div>
+                <div class="settings-grid">
+                    <article class="panel settings-card">
+                        <p class="eyebrow">Savings</p>
+                        <h3>Monthly savings goal</h3>
+                        <p class="muted">The app uses this to calculate your savings progress.</p>
+                        <label>Goal in RON</label>
+                        <input id="savingsGoalInput" class="form-input" type="number" min="0" step="10">
+                        <button id="saveSettingsBtn" class="primary-btn">Save settings</button>
+                    </article>
+                    <article class="panel settings-card">
+                        <p class="eyebrow">Categories</p>
+                        <h3>Your default categories</h3>
+                        <div id="settingsCategories" class="settings-categories"></div>
+                    </article>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="modalOverlay" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" id="modalClose">×</button>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
